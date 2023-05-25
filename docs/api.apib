@@ -1,0 +1,158 @@
+# 自転車メンテナンスAPI
+自転車のメンテナンス管理アプリケーションのCRUD機能のAPIです。
+
+## ベースURL
+
+## エンドポイント
+
+### 自転車一覧取得	[GET /bicycles]
+自転車情報の取得
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+		+ id: `1` (number) - ID
+		+ brand: `Giant` (string) - ブランド
+		+ model: `TCR Advanced` (string) - モデル
+		+ color: `Red` (string) - 色
+		+ year: `2022` (number) - 年式
+
++ Response 400 (application/json)
+    + Attributes
+        + message: `NG` (string)　- メッセージ
+        + detail: `データを取得できませんでした` (string)　- メッセージ内容
+
+### 自転車作成 [POST /bicycles]
+新規自転車の登録
+
++ Request (application/json)
+    + Attributes
+      	brand: `Specialized` (string) - ブランド
+      	model: `Roubaix` (string) - モデル
+      	color: `Black` (string) - 色
+  		year: `2023` (number) - 年式
+
++ Created 201 (application/json)
+	+ Attributes
+  		id: `3` (number) - ID
+  		brand: `Specialized` (string) - ブランド
+      	model: `Roubaix` (string) - モデル
+      	color: `Black` (string) - 色
+  		year: `2023` (number) - 年式
+
+
+### 自転車取得 [GET /bicycles/{id}]
+自転車情報の取得
+
++ Request (application/json)
+    + Attributes
+  		brand: `Giant` (string) - ブランド
+  		model: `Defy` (string) - モデル
+  		color: `Black` (string) - 色
+  		year: `2022` (number) - 年式
+
++ Response 200 (application/json)
+    + Attributes
+ 		id: `1` (number) - ID
+		brand: `Giant` (string) - ブランド
+		model: `Defy` (string) - モデル
+		color: `Black` (string) - 色
+		year: `2022` (number) - 年式
+
+### 自転車削除 [DELETE /bicycles/{id}]
+自転車情報を削除
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        + message: `OK` (string)　-ユーザー権限
+        + detail: `データを削除しました` (string)　-ユーザー権限
+
++ Response 400 (application/json)
+    + Attributes
+        + message: `NG` (string)　- メッセージ
+        + detail: `データを取得できませんでした` (string)　- メッセージ内容
+
+### パーツ一覧取得 [GET /parts]
+パーツ一覧の取得
+
++ Response 200 (application/json)
+    + Attributes 		
+		id: `1` (number) - ID
+		name: `Chain` (string) - パーツ名
+		brand: `Shimano` (string) - ブランド
+		type: `Chain` (string) - タイプ
+		price: `25.99` (number) - 値段
+		last_inspection_date: `2023-05-31` (Date) - 最後の点検日付（交換日）
+
+
+### パーツ登録 [POST /parts]
+パーツの登録
+
++ Request (application/json)
+    + Attributes
+  		name: `Break Pads` (string) - パーツ名
+  		brand: `SRAM` (string) - ブランド
+  		type : `Brake` (string) - タイプ
+		price: `15.99` (number) - 値段
+
++ Response 200 (application/json)
+    + Attributes 	
+		id: `2` (number) - ID	
+	  	name: `Break Pads` (string) - パーツ名
+  		brand: `SRAM` (string) - ブランド
+  		type : `Brake` (string) - タイプ
+		price: `15.99` (number) - 値段
+
+### パーツ取得 [GET /parts/{id}]
+パーツの取得
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes 	
+		id: `1` (number) - ID	
+	  	name: `Break Pads` (string) - パーツ名
+  		brand: `SRAM` (string) - ブランド
+  		type : `Brake` (string) - タイプ
+		price: `15.99` (number) - 値段
+		last_inspection_date: `2023-05-31` (Date) - 最後の点検日付（交換日）
+
+### パーツ更新 [PUT /parts/{id}]
+パーツの更新
+
++ Parameters
+    + id: `1` (number, required)
+
++ Request (application/json)
+    + Attributes
+		name: `Chain` (string) - パーツ名
+		brand: `SRAM` (string) - ブランド
+		type : `Chain` (string) - タイプ
+		price: `25.99` (number) - 値段
+		last_inspection_date: `2023-05-31` (Date) - 最後の点検日付（交換日）
+
++ Response 200 (application/json)
+    + Attributes 		
+		id: `1` (number) - ID
+		name: `Chain` (string) - パーツ名
+		brand: `Shimano` (string) - ブランド
+		type: `Chain` (string) - タイプ
+		price: `25.99` (number) - 値段
+		last_inspection_date: `2023-05-31` (Date) - 最後の点検日付（交換日）
+
+### パーツ削除 [DELETE /parts/{id}]
+パーツの削除
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        + message: `OK` (string)　-ユーザー権限
+        + detail: `データを削除しました` (string)　-ユーザー権限
