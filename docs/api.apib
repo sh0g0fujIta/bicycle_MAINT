@@ -3,7 +3,57 @@
 
 ## ベースURL
 
-## エンドポイント
+### ユーザ新規登録　[POST /username]
+ユーザ新規登録
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+		+ id: `1` (number) - ID
+		+ username: `shogo` (string) - 名前
+		+ password1: `password` (string) - パスワード
+		+ password2: `password` (string) - パスワード
+
++ Response 400 (application/json)
+    + Attributes
+        + message: `NG` (string)　- メッセージ
+        + detail: `データを取得できませんでした` (string)　- メッセージ内容
+
+### ログイン画面　[POST /username]
+ログイン画面
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+		+ id: `1` (number) - ID
+		+ username: `shogo` (string) - 名前
+		+ password: `password` (string) - パスワード
+
++ Response 400 (application/json)
+    + Attributes
+        + message: `NG` (string)　- メッセージ
+        + detail: `データを取得できませんでした` (string)　- メッセージ内容
+
+### ログアウト画面　[POST /username]
+ログアウト画面
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+		+ id: `1` (number) - ID
+		+ username: `shogo` (string) - 名前
+		+ password: `password` (string) - パスワード
+
++ Response 400 (application/json)
+    + Attributes
+        + message: `NG` (string)　- メッセージ
+        + detail: `データを取得できませんでした` (string)　- メッセージ内容
 
 ### 自転車一覧取得	[GET /bicycles]
 自転車情報の取得

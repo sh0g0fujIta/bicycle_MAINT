@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content_block %}
+<form action="{% url 'App:signup' %}" method="post">
+  <div class="min-h-screen flex justify-center items-center">
+    <div class="border border-gray-700 p-5 pointer-events-auto">
+      <div class="my-4">
+        <label for="username">ユーザ名</label>
+        <input name="username" class="border border-gray-400 rounded-md" id="username" type="text" required>
+      </div>
+      <div class="mb-4">
+        <label for="password">password</label>
+        <input name="password1" class="border border-gray-400 rounded-md" id="password" type="password" required>
+      </div>
+      <div class="mb-4">
+        <label for="passwordConfirm">passwordConfirm</label>
+        <input name="password2" class="border border-gray-400 rounded-md" id="passwordConfirm" type="password" required>
+      </div>
+      <div class="text-center">
+        <button class="bg-gray-800 text-gray-400 rounded-md p-2" type="submit">submit</button>
+      </div>
+    </div>
+  </div>
+  {% csrf_token %}
+</form>
+{% endblock %}
