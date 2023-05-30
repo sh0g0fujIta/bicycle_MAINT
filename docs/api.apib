@@ -1,9 +1,11 @@
 # 自転車メンテナンスAPI
 自転車のメンテナンス管理アプリケーションのCRUD機能のAPIです。
 
-## ベースURL
 
-### ユーザ新規登録　[POST /username]
+# Group ユーザ管理
+ユーザ管理のAPIを定義します。
+
+### ユーザ新規登録  [POST /username]
 ユーザ新規登録
 
 + Parameters
@@ -21,7 +23,7 @@
         + message: `NG` (string)　- メッセージ
         + detail: `データを取得できませんでした` (string)　- メッセージ内容
 
-### ログイン画面　[POST /username]
+### ログイン画面    [POST /username]
 ログイン画面
 
 + Parameters
@@ -38,7 +40,7 @@
         + message: `NG` (string)　- メッセージ
         + detail: `データを取得できませんでした` (string)　- メッセージ内容
 
-### ログアウト画面　[POST /username]
+### ログアウト画面  [POST /username]
 ログアウト画面
 
 + Parameters
@@ -54,6 +56,10 @@
     + Attributes
         + message: `NG` (string)　- メッセージ
         + detail: `データを取得できませんでした` (string)　- メッセージ内容
+
+
+# Group 自転車管理
+自転車管理のAPIを定義します。
 
 ### 自転車一覧取得	[GET /bicycles]
 自転車情報の取得
@@ -126,6 +132,11 @@
     + Attributes
         + message: `NG` (string)　- メッセージ
         + detail: `データを取得できませんでした` (string)　- メッセージ内容
+
+
+# Group パーツ管理
+パーツ管理のAPIを定義します。
+
 
 ### パーツ一覧取得 [GET /parts]
 パーツ一覧の取得

@@ -8,9 +8,11 @@ from django.urls import reverse
 # Create your views here.
 
 
+#メインページ処理
 def template_view(request):
     return render(request, 'index.html')
 
+#新規登録処理
 def singup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -55,6 +57,7 @@ def login_view(request):
     else:
         return render(request, 'login.html')
 
+#ログアウト処理
 def logout_view(request):
     logout(request)
     return redirect('App:list')
