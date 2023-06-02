@@ -3,6 +3,7 @@ from .forms import SignupForm
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from .models import Toppage
 
 
 # Create your views here.
@@ -10,7 +11,10 @@ from django.urls import reverse
 
 #メインページ処理
 def template_view(request):
-    return render(request, 'index.html')
+    toppage_data = {
+        'toppage': Toppage.objects.all()
+    }
+    return render(request, 'index.html', toppage_data)
 
 #新規登録処理
 def singup_view(request):
