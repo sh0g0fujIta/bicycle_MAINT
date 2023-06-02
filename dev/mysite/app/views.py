@@ -11,10 +11,10 @@ from .models import Toppage
 
 #メインページ処理
 def template_view(request):
-    toppage_data = {
+    context = {
         'toppage': Toppage.objects.all()
     }
-    return render(request, 'index.html', toppage_data)
+    return render(request, 'index.html', context)
 
 #新規登録処理
 def singup_view(request):
