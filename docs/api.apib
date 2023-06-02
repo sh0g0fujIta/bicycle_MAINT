@@ -15,11 +15,14 @@ Response Body は JSON オブジェクトとして次の形式で戻ります。
 # Group ユーザ管理
 ユーザ管理のAPIを定義します。
 
-### ユーザ新規登録  [POST /username]
+### ユーザ新規登録  [POST /new_user]
 ユーザ新規登録
 
-+ Parameters
-    + id: `1` (number, required)
++ Request (application/json)
+    + Attributes
+		+ username: `shogo` (string) - 名前
+		+ password1: `password` (string) - パスワード
+		+ password2: `password` (string) - パスワード
 
 + Response 200 (application/json)
     + Attributes
@@ -33,15 +36,16 @@ Response Body は JSON オブジェクトとして次の形式で戻ります。
         + message: `NG` (string)　- メッセージ
         + detail: `データを取得できませんでした` (string)　- メッセージ内容
 
-### ログイン画面    [POST /username]
+### ログイン処理	[POST /login]
 ログイン画面
 
-+ Parameters
-    + id: `1` (number, required)
-
-+ Response 200 (application/json)
++ Request (application/json)
     + Attributes
-		+ id: `1` (number) - ID
+		+ username: `shogo` (string) - 名前
+		+ password: `password` (string) - パスワード
+
++ Request 200 (application/json)
+    + Attributes
 		+ username: `shogo` (string) - 名前
 		+ password: `password` (string) - パスワード
 
@@ -49,24 +53,6 @@ Response Body は JSON オブジェクトとして次の形式で戻ります。
     + Attributes
         + message: `NG` (string)　- メッセージ
         + detail: `データを取得できませんでした` (string)　- メッセージ内容
-
-### ログアウト画面  [POST /username]
-ログアウト画面
-
-+ Parameters
-    + id: `1` (number, required)
-
-+ Response 200 (application/json)
-    + Attributes
-		+ id: `1` (number) - ID
-		+ username: `shogo` (string) - 名前
-		+ password: `password` (string) - パスワード
-
-+ Response 400 (application/json)
-    + Attributes
-        + message: `NG` (string)　- メッセージ
-        + detail: `データを取得できませんでした` (string)　- メッセージ内容
-
 
 # Group 自転車管理
 自転車管理のAPIを定義します。
@@ -98,7 +84,7 @@ Response Body は JSON オブジェクトとして次の形式で戻ります。
       	brand: `Specialized` (string) - ブランド
       	model: `Roubaix` (string) - モデル
       	color: `Black` (string) - 色
-  		year: `2023` (number) - 年式
+  			year: `2023` (number) - 年式
 
 + Created 201 (application/json)
 	+ Attributes

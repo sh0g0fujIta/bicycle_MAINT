@@ -68,8 +68,8 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'mysite.wsgi.application'
+
 
 
 # Database
@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bicycle_db',
+        'USER': 'root', # パソコンにインストールしたMySQLのユーザー名
+        'PASSWORD': 'fujita', # 同上。そのパスワード
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
