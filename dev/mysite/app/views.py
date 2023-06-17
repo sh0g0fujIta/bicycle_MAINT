@@ -11,10 +11,7 @@ from .models import Toppage
 
 #メインページ処理
 def template_view(request):
-    context = {
-        'toppage': Toppage.objects.all()
-    }
-    return render(request, 'index.html', context)
+    return render(request, 'index.html')
 
 #新規登録処理
 def singup_view(request):
@@ -50,7 +47,7 @@ def login_view(request):
                 # ログイン
                 login(request,user)
                 # ホームページ遷移
-                return HttpResponseRedirect(reverse('App:list'))
+                return HttpResponseRedirect(reverse('App:mainpage'))
             else:
                 # アカウント利用不可
                 return HttpResponse("アカウントが有効ではありません")
@@ -65,3 +62,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('App:list')
+
+#メインページ
+def mainpage_view(request):
+    return render(request, 'mainpage.html')

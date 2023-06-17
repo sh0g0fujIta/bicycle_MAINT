@@ -2,3 +2,9 @@
 dev/mysite/myvenv
 # PowerPoint
 docs\自転車メンテナンス.pptx.lnk
+
+*.log
+*.pyc
+__pycache__/
+db-volumes/
+db.sqlite3
