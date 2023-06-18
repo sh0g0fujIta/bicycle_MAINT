@@ -1,5 +1,9 @@
 # ソースコードの変更
 
+``` cmd
+git clone https://github.com/sh0g0fujIta/bycycle_MAINT.git
+```
+
 1. ソースコードの修正を行う
 
 2. githubに変更を取り込みたい第るをステージングエリアに追加する
