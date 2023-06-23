@@ -3,7 +3,7 @@ from .forms import SignupForm
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .models import Toppage
+from .models import Toppage, Bicycle
 
 
 # Create your views here.
@@ -65,4 +65,7 @@ def logout_view(request):
 
 #メインページ
 def mainpage_view(request):
-    return render(request, 'mainpage.html')
+    bycycles =  Bicycle.object.all()
+    context = {"bycycle": bycycles}
+    
+    return render(request, 'mainpage.html', context)

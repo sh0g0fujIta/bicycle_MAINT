@@ -14,12 +14,13 @@
     {% if user.is_authenticated %}
     <header class="bg-gray-800 p-5 flex justify-between text-gray-100">
         <h2>
-            <a class="text-center text-xl text-gray-100" href="{% url 'App:list' %}">自転車メンテナンス</a>
+            <a class="text-center text-xl text-gray-100" href="{% url 'App:mainpage' %}">自転車メンテナンス</a>
         </h2>
         <nav>
             <ul class="flex gap-4">
                 <li class="text-center">ようこそ：{{ user.username }} さん</a></li>
-                <li><a href="/mypage">マイページ</a></li>
+                <li><a href="{% url 'App:mainpage' %}">TOP</a></li>
+                <li><a href=#>自転車登録</a></li>
                 <form id="logoutForm" action="{% url 'App:logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" onclick="return confirmLogout()">ログアウト</button>
