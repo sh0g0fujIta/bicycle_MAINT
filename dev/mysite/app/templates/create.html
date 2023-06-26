@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content_block %}
+<form class="row g-3">
+    <div class="col-md-6">
+        <label for="inputState" class="form-label">ブランドlabel>
+        <select id="inputState" class="form-select">
+          <option selected>Choose...</option>
+          <option>...</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label">モデル</label>
+      <input type="password" class="form-control" id="inputPassword4">
+    </div>
+    <div class="col-12">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">自転車の写真</label>
+            <input class="form-control" type="file" id="formFile">
+        </div>
+    <div class="col-12">
+      <label for="inputAddress" class="form-label">年式</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+  </form>
+{% endblock %}

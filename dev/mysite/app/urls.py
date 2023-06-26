@@ -11,7 +11,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('signup/', views.singup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
-    path('mainpage/', views.mainpage_view, name='mainpage')
+    path('mainpage/', views.mainpage_view, name='mainpage'),
+    path('bicycle_create/', views.bicycle_create_view, name='bicycle_create'),
 ]
 
 if settings.DEBUG:

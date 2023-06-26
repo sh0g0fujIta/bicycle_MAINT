@@ -1,4 +1,5 @@
 from django.db import models
+from .forms import BicycleBrandForm
 
 # Create your models here.
 
@@ -10,6 +11,7 @@ class Toppage(models.Model):
     def __str__(self):
         return self.title
 
+
 class Color(models.Model):
     color = models.CharField('色', max_length=100, null=True, blank=True)
 
@@ -17,13 +19,14 @@ class Color(models.Model):
         return self.color
     
 class Bicycle(models.Model):
-    brand = models.CharField('ブランド', max_length=100, null=True, blank=True)
+    image = models.ImageField(upload_to='images/bycycle/', verbose_name='登録する自転車の画像')
+    brand = models.CharField('ブランド', max_length=100, choices=BicycleBrandForm.Brand_Choices)
     model = models.CharField('モデル', max_length=100, null=True, blank=True)
-    color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
     year = models.CharField('年式', max_length=100, null=True, blank=True)
+    update_at = models.DateTimeField('更新日時',null=False, blank=False, auto_now=True)
     
     def __str__(self):
-        return self.year + self.brand
+        return self.brand + "_" + self.model + "_" + self.year
     
 class Part(models.Model):
     name = models.CharField('パーツ名', max_length=100, null=True, blank=True)

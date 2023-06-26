@@ -3,8 +3,8 @@ from .forms import SignupForm
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .models import Toppage, Bicycle
-
+from .models import Bicycle
+from .forms import BicycleForm
 
 # Create your views here.
 
@@ -65,7 +65,29 @@ def logout_view(request):
 
 #メインページ
 def mainpage_view(request):
-    bycycles =  Bicycle.object.all()
-    context = {"bycycle": bycycles}
+    context = {
+        "bicycle": BicycleForm.objects.all(),
+        }
     
     return render(request, 'mainpage.html', context)
+
+#自転車登録ページ
+def bicycle_create_view(request):
+    if request.method == 'POST':
+        form = BicycleForm(request.POST, request.FILES)
+        if form.is_valid():
+            brand = form.cleaned_data['brand']
+            model = form.cleaned_data['model']
+            year = form.cleaned_data['year']
+            image = form.cleaned_data['image']
+            bicycle = Bicycle(brand=brand, model=model, year=year, image=image)
+            bicycle.save()
+            return redirect('bicycle_list')
+    else:
+        form = BicycleForm()
+        
+    context = {
+        'form': form
+        }
+    
+    return render(request, 'register_bicycle.html', context)
