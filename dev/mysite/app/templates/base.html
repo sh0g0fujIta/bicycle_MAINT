@@ -18,7 +18,6 @@
         </h2>
         <nav>
             <ul class="flex gap-4">
-                <li class="text-center">ようこそ：{{ user.username }} さん</a></li>
                 <li><a href="{% url 'App:mainpage' %}">TOP</a></li>
                 <li><a href=#>自転車登録</a></li>
                 <form id="logoutForm" action="{% url 'App:logout' %}" method="post">
