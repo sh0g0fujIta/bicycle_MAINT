@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from .models import Bicycle
 from .forms import BicycleForm
+from .models import Brand_Choices
 
 # Create your views here.
 
@@ -66,13 +67,16 @@ def logout_view(request):
 #メインページ
 def mainpage_view(request):
     context = {
-        "bicycle": BicycleForm.objects.all(),
+        "bicycles": Bicycle.objects.all(),
         }
+    for bicycle in Bicycle.objects.all():
+        print(bicycle.image)
     
     return render(request, 'mainpage.html', context)
 
 #自転車登録ページ
 def bicycle_create_view(request):
+    context = None
     if request.method == 'POST':
         form = BicycleForm(request.POST, request.FILES)
         if form.is_valid():
@@ -85,9 +89,10 @@ def bicycle_create_view(request):
             return redirect('bicycle_list')
     else:
         form = BicycleForm()
-        
-    context = {
-        'form': form
+        choices = Brand_Choices
+        context = {
+            'form' : form,
+            'choices' : choices
         }
     
-    return render(request, 'register_bicycle.html', context)
+    return render(request, 'create.html', context)

@@ -111,4 +111,4 @@ class BicycleBrandForm(forms.Form):
 class BicycleForm(forms.ModelForm):
     class Meta:
         model = Bicycle
-        firlds = ['bicyclphoto', 'brand', 'model', 'year']
+        fields = ['image', 'brand', 'model', 'year']

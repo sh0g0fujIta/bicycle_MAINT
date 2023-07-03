@@ -1,17 +1,20 @@
 {% extends "base.html" %}
 
 {% block content_block %}
-<form class="row g-3">
+<form class="row g-3" action="{% url 'App:bicycle_create' %}" method="POST">
     <div class="col-md-6">
-        <label for="inputState" class="form-label">ブランドlabel>
+        <label for="inputState" class="form-label">ブランド</label>
         <select id="inputState" class="form-select">
-          <option selected>Choose...</option>
-          <option>...</option>
+          {% for item in choices %}
+            <option selected value="{{ item.0 }}">
+              {{ item.1 }}
+            </option>
+          {% endfor %}
         </select>
     </div>
     <div class="col-md-6">
       <label for="inputPassword4" class="form-label">モデル</label>
-      <input type="password" class="form-control" id="inputPassword4">
+      <input type="text" class="form-control">
     </div>
     <div class="col-12">
         <div class="mb-3">
@@ -20,10 +23,11 @@
         </div>
     <div class="col-12">
       <label for="inputAddress" class="form-label">年式</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      <input type="text" class="form-control" id="inputAddress" placeholder="">
     </div>
     <div class="col-12">
-      <button type="submit" class="btn btn-primary">Sign in</button>
+      <button type="submit" class="btn btn-primary">登録</button>
     </div>
-  </form>
+    {% csrf_token %}
+</form>
 {% endblock %}
