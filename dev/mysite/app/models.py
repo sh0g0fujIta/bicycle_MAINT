@@ -94,13 +94,6 @@ class Toppage(models.Model):
     
     def __str__(self):
         return self.title
-
-
-class Color(models.Model):
-    color = models.CharField('色', max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return self.color
     
 class Bicycle(models.Model):
 
@@ -117,7 +110,6 @@ class Part(models.Model):
     name = models.CharField('パーツ名', max_length=100, null=True, blank=True)
     brand = models.CharField('ブランド', max_length=100, null=True, blank=True)
     type = models.CharField('タイプ', max_length=100, null=True, blank=True)
-    price = models.CharField('値段', max_length=100, null=True, blank=True)
     last_inspection_date = models.CharField('最後の点検日付（交換日）', max_length=100, null=True, blank=True)
     
     def __str__(self):

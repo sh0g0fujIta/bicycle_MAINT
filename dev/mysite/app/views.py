@@ -95,4 +95,9 @@ def bicycle_create_view(request):
             'choices' : choices
         }
     
-    return render(request, 'create.html', context)
+    return render(request, 'bicyclecreate.html', context)
+
+#パーツ登録ページ
+def part_create_view(request):
+    
+    return render(request, 'part_create.html')
