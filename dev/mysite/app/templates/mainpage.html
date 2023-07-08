@@ -11,7 +11,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ bicycle.brand }}</h5>
           <h5 class="card-text">{{ bicycle.model }}</h5>
-          <a href="#" class="btn btn-primary">詳細</a>
+          <a href="{% url 'App:bicycle_detail' %}" class="btn btn-primary">詳細</a>
           <div class="card-footer">
             <small class="text-muted">更新日時：{{ bicycle.update_at }}</small>
           </div>

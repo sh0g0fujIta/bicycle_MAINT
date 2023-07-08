@@ -96,7 +96,6 @@ class Toppage(models.Model):
         return self.title
     
 class Bicycle(models.Model):
-
     image = models.ImageField(upload_to='images/bycycle/', verbose_name='登録する自転車の画像')
     brand = models.CharField('ブランド', max_length=100, choices=Brand_Choices)
     model = models.CharField('モデル', max_length=100, null=True, blank=True)

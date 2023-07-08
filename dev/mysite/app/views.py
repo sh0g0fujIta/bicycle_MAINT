@@ -12,6 +12,10 @@ from .models import Brand_Choices
 
 #メインページ処理
 def template_view(request):
+    if request.user.is_authenticated:
+        # ログインページ遷移
+        return HttpResponseRedirect(reverse('App:mainpage'))
+
     return render(request, 'index.html')
 
 #新規登録処理
@@ -47,7 +51,7 @@ def login_view(request):
             if user.is_active:
                 # ログイン
                 login(request,user)
-                # ホームページ遷移
+                # ログインページ遷移
                 return HttpResponseRedirect(reverse('App:mainpage'))
             else:
                 # アカウント利用不可
@@ -64,8 +68,12 @@ def logout_view(request):
     logout(request)
     return redirect('App:list')
 
-#メインページ
+#ページ
 def mainpage_view(request):
+    if not request.user.is_authenticated:
+        # ホームページ遷移
+        return HttpResponseRedirect(reverse('App:list'))
+    
     context = {
         "bicycles": Bicycle.objects.all(),
         }
@@ -79,6 +87,8 @@ def bicycle_create_view(request):
     context = None
     if request.method == 'POST':
         form = BicycleForm(request.POST, request.FILES)
+        for field in form:
+            print("Field Error:", field.name,  field.errors)
         if form.is_valid():
             brand = form.cleaned_data['brand']
             model = form.cleaned_data['model']
@@ -86,7 +96,7 @@ def bicycle_create_view(request):
             image = form.cleaned_data['image']
             bicycle = Bicycle(brand=brand, model=model, year=year, image=image)
             bicycle.save()
-            return redirect('bicycle_list')
+            return redirect('App:mainpage')
     else:
         form = BicycleForm()
         choices = Brand_Choices
@@ -95,7 +105,12 @@ def bicycle_create_view(request):
             'choices' : choices
         }
     
-    return render(request, 'bicyclecreate.html', context)
+    return render(request, 'bicycle_create.html', context)
+
+#自転車詳細ページ
+def bicycle_detail_view(request):
+    
+    return render(request, 'bicycle_detail.html')
 
 #パーツ登録ページ
 def part_create_view(request):

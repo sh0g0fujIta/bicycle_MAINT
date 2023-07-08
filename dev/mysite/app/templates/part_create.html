@@ -1,32 +1,21 @@
 {% extends "base.html" %}
 
 {% block content_block %}
-<form class="row g-3" action="{% url 'App:bicycle_create' %}" method="POST">
+<form class="row g-3" action="{% url 'App:part_create' %}" method="POST">
     <div class="col-md-6">
-        <label for="inputState" class="form-label">ブランド</label>
-        <select id="inputState" class="form-select">
-          {% for item in choices %}
-            <option selected value="{{ item.0 }}">
-              {{ item.1 }}
-            </option>
-          {% endfor %}
-        </select>
+      <label for="inputPart" class="form-label">パーツ名</label>
+      <input type="text" class="form-control">
     </div>
     <div class="col-md-6">
-      <label for="inputPassword4" class="form-label">モデル</label>
+      <label for="inputBrand" class="form-label">ブランド</label>
       <input type="text" class="form-control">
     </div>
     <div class="col-12">
-        <div class="mb-3">
-            <label for="formFile" class="form-label">自転車の写真</label>
-            <input class="form-control" type="file" id="formFile">
-        </div>
-    <div class="col-12">
-      <label for="inputAddress" class="form-label">年式</label>
+      <label for="inputType" class="form-label">タイプ</label>
       <input type="text" class="form-control" id="inputAddress" placeholder="">
     </div>
     <div class="col-12">
-      <button type="submit" class="btn btn-primary">登録</button>
+      <button type="submit" class="btn btn-primary">パーツ登録</button>
     </div>
     {% csrf_token %}
 </form>
