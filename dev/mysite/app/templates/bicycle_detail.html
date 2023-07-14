@@ -1,23 +1,28 @@
 {% extends "base.html" %}
 
 {% block content_block %}
-  <h1 class="fs-1">ようこそ{{ user.username }} さん</h1>
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for bicycle in bicycles %}
-    <div class="col">
-      <div class="card h-100">
-        <img src='{{ MEDIA_URL }}/{{ bicycle.image }}' class="card-img-top img-thumbnail" alt="photo">
-        <!-- <img src="/media/images/bycycle/ROUBAIX.png" class="card-img-top img-thumbnail" alt="photo"> -->
-        <div class="card-body">
-          <h5 class="card-title">{{ bicycle.brand }}</h5>
-          <h5 class="card-text">{{ bicycle.model }}</h5>
-          <a href="#" class="btn btn-primary">詳細</a>
-          <div class="card-footer">
-            <small class="text-muted">更新日時：{{ bicycle.update_at }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+<h1 class="h3 mb-3 fw-bolder text-center">{{ bicycle.brand }}のパーツ構成</h1>
+    <a href="{% url 'App:part_create' %}" class="btn btn-outline-primary">パーツ登録</a>
+    <table class="table text-center">
+        <thead>
+          <tr>
+            <th scope="col">パーツ名</th>
+            <th scope="col">ブランド</th>
+            <th scope="col">タイプ</th>
+            <th scope="col">点検日</th>
+            <th scope="col">#</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for part in parts %}
+                <tr>
+                    <td>{{ part.name }}</td>
+                    <td>{{ part.brand }}</td>
+                    <td>{{ part.type }}</td>
+                    <td>{{ part.last_inspection_date}}</td>
+                    <td><a href="#" class="btn btn-outline-success">更新</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

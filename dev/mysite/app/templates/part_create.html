@@ -1,22 +1,29 @@
 {% extends "base.html" %}
 
 {% block content_block %}
-<form class="row g-3" action="{% url 'App:part_create' %}" method="POST">
-    <div class="col-md-6">
-      <label for="inputPart" class="form-label">パーツ名</label>
-      <input type="text" class="form-control">
+<h1 class="h3 mb-3 fw-bolder text-center">パーツを登録してください</h1>
+<div class="container-sm mt-10">
+  <div class="text-center">
+    <form class="row g-3" action="{% url 'App:part_create' %}" method="POST">
+      <div class="form-floating">
+        <input name="name" type="text" class="form-control">
+        <label for="inputPart" class="form-label">パーツ名</label>
+      </div>
+      <div class="form-floating">
+        <input name="brand" type="text" class="form-control">
+        <label for="inputBrand" class="form-label">ブランド</label>
+      </div>
+      <div class="form-floating">
+        <input name="type" type="text" class="form-control" id="inputAddress" placeholder="">
+        <label for="inputType" class="form-label">タイプ</label>
+      </div>
+      <div class="form-floating">
+        <input name="last_inspection_date" type="date" class="form-control" id="inputAddress" placeholder="">
+        <label for="inputType" class="form-label">点検日付</label>
     </div>
-    <div class="col-md-6">
-      <label for="inputBrand" class="form-label">ブランド</label>
-      <input type="text" class="form-control">
-    </div>
-    <div class="col-12">
-      <label for="inputType" class="form-label">タイプ</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="">
-    </div>
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary">パーツ登録</button>
-    </div>
+    <button class="btn btn-lg btn-primary" type="submit">パーツ登録</button>
     {% csrf_token %}
-</form>
+    </form>
+  </div>
+</div>
 {% endblock %}

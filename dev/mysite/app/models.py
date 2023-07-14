@@ -87,13 +87,13 @@ Brand_Choices = (
     ('ZULLO', 'ズッロ'),           
 )
     
-class Toppage(models.Model):
-    title = models.CharField('タイトル', max_length=100, null=True, blank=True)
-    subtitle = models.CharField('サブタイトル', max_length=100, null=True, blank=True)
-    topimage = models.ImageField(upload_to='images/', verbose_name='トップ画像')
+class User(models.Model):
+    first_name = models.CharField('名', max_length=20)
+    last_name = models.CharField('姓', max_length=20)
+    email = models.EmailField('メールアドレス', max_length=100)
     
     def __str__(self):
-        return self.title
+        return self.last_name + self.first_name 
     
 class Bicycle(models.Model):
     image = models.ImageField(upload_to='images/bycycle/', verbose_name='登録する自転車の画像')
@@ -109,7 +109,7 @@ class Part(models.Model):
     name = models.CharField('パーツ名', max_length=100, null=True, blank=True)
     brand = models.CharField('ブランド', max_length=100, null=True, blank=True)
     type = models.CharField('タイプ', max_length=100, null=True, blank=True)
-    last_inspection_date = models.CharField('最後の点検日付（交換日）', max_length=100, null=True, blank=True)
+    last_inspection_date = models.DateField('点検日付（交換日）', max_length=100, null=True, blank=True)
     
     def __str__(self):
-        return self.name + self.brand
+        return self.name + "_" + self.brand

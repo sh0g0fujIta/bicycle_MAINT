@@ -1,23 +1,33 @@
 {% extends "base.html" %}
 
 {% block content_block %}
-  <h1 class="fs-1">ようこそ{{ user.username }} さん</h1>
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for bicycle in bicycles %}
-    <div class="col">
-      <div class="card h-100">
-        <img src='{{ MEDIA_URL }}/{{ bicycle.image }}' class="card-img-top img-thumbnail" alt="photo">
-        <!-- <img src="/media/images/bycycle/ROUBAIX.png" class="card-img-top img-thumbnail" alt="photo"> -->
-        <div class="card-body">
-          <h5 class="card-title">{{ bicycle.brand }}</h5>
-          <h5 class="card-text">{{ bicycle.model }}</h5>
-          <a href="{% url 'App:bicycle_detail' %}" class="btn btn-primary">詳細</a>
-          <div class="card-footer">
-            <small class="text-muted">更新日時：{{ bicycle.update_at }}</small>
+
+  <h1 class="h3 mb-3 fw-bolder text-center">ようこそ{{ user.username }}さん</h1>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for bicycle in bicycles %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-image">
+              <img src='{{ MEDIA_URL }}/{{ bicycle.image }}' class="card-img-top" sizes="100%, 100%" alt="Image">
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{ bicycle.brand }}</p>
+              <p class="card-text">{{ bicycle.model }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-grid gap-2 d-md-block">
+                  <a type="button" href="{% url 'App:bicycle_detail' %}" class="btn btn-sm btn-outline-primary">Part View</a>
+                  <a type="button" href="{% url 'App:bicycle_detail' %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+                <small class="text-muted">更新日時：{{ bicycle.update_at }}</small>
+              </div>
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
     </div>
-    {% endfor %}
   </div>
+
 {% endblock %}

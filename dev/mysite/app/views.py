@@ -3,7 +3,7 @@ from .forms import SignupForm
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .models import Bicycle
+from .models import Bicycle, Part
 from .forms import BicycleForm
 from .models import Brand_Choices
 
@@ -68,10 +68,10 @@ def logout_view(request):
     logout(request)
     return redirect('App:list')
 
-#ページ
+#ログインページ
 def mainpage_view(request):
     if not request.user.is_authenticated:
-        # ホームページ遷移
+        # ログインページ遷移
         return HttpResponseRedirect(reverse('App:list'))
     
     context = {
@@ -109,8 +109,13 @@ def bicycle_create_view(request):
 
 #自転車詳細ページ
 def bicycle_detail_view(request):
+
+    context = {
+        'parts': Part.objects.all(),
+        'bicycle': Bicycle.objects.all(),
+        }
     
-    return render(request, 'bicycle_detail.html')
+    return render(request, 'bicycle_detail.html', context)
 
 #パーツ登録ページ
 def part_create_view(request):
