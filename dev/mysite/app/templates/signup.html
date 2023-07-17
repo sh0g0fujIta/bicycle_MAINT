@@ -1,26 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block content_block %}
-<form action="{% url 'App:signup' %}" method="post">
-  <div class="min-h-screen flex justify-center items-center">
-    <div class="border border-gray-700 p-5 pointer-events-auto">
-      <div class="my-4">
-        <label for="username">ユーザ名</label>
-        <input name="username" class="border border-gray-400 rounded-md" id="username" type="text" required>
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock customcss %}
+
+{% block content %}
+<body class="form-signin">
+  <div class="flex justify-center items-center text-center">
+    <form class="form-signin" method="POST">{% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  
+      <div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" name="username" placeholder="username">
+        <label for="floatingInput">Username</label>
       </div>
-      <div class="mb-4">
-        <label for="password">パスワード</label>
-        <input name="password1" class="border border-gray-400 rounded-md" id="password" type="password" required>
+      <div class="form-floating">
+        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
       </div>
-      <div class="mb-4">
-        <label for="passwordConfirm">パスワード（確認用）</label>
-        <input name="password2" class="border border-gray-400 rounded-md" id="passwordConfirm" type="password" required>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+        <label for="floatingPassword">Password</label>
       </div>
-      <div class="text-center">
-        <button class="bg-gray-800 text-gray-400 rounded-md p-2" type="submit">submit</button>
-      </div>
-    </div>
+  
+      <button class="w-100 btn btn-lg btn-primary" type="submit">signup</button>
+    </form>
   </div>
-  {% csrf_token %}
-</form>
-{% endblock %}
+</body>
+{% endblock content %}

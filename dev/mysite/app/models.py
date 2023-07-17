@@ -1,5 +1,5 @@
 from django.db import models
-# from .forms import BicycleBrandForm
+from django.contrib.auth.models import User
 
 # Create your models here.
 Brand_Choices = (
@@ -87,15 +87,8 @@ Brand_Choices = (
     ('ZULLO', 'ズッロ'),           
 )
     
-class User(models.Model):
-    first_name = models.CharField('名', max_length=20)
-    last_name = models.CharField('姓', max_length=20)
-    email = models.EmailField('メールアドレス', max_length=100)
-    
-    def __str__(self):
-        return self.last_name + self.first_name 
-    
 class Bicycle(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,)
     image = models.ImageField(upload_to='images/bycycle/', verbose_name='登録する自転車の画像')
     brand = models.CharField('ブランド', max_length=100, choices=Brand_Choices)
     model = models.CharField('モデル', max_length=100, null=True, blank=True)
@@ -106,6 +99,7 @@ class Bicycle(models.Model):
         return self.brand + "_" + self.model + "_" + self.year
     
 class Part(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,)
     name = models.CharField('パーツ名', max_length=100, null=True, blank=True)
     brand = models.CharField('ブランド', max_length=100, null=True, blank=True)
     type = models.CharField('タイプ', max_length=100, null=True, blank=True)

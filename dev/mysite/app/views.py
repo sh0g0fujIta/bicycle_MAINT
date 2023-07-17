@@ -1,78 +1,67 @@
 from django.shortcuts import render, redirect
-from .forms import SignupForm
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
-from .models import Bicycle, Part
-from .forms import BicycleForm
-from .models import Brand_Choices
+from django.urls import reverse, reverse_lazy
+from .models import Bicycle, Part, Brand_Choices
+from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 # Create your views here.
 
 
 #メインページ処理
-def template_view(request):
+def index_view(request):
     if request.user.is_authenticated:
         # ログインページ遷移
-        return HttpResponseRedirect(reverse('App:mainpage'))
+        login(request, User)
+        user_id = request.User.id
+        object = User.objects.get(id=user_id)
+        return HttpResponseRedirect(render(request, 'list.html', {'object': object}))
 
-    return render(request, 'index.html')
+    return render(request, 'index.html', {})
 
 #新規登録処理
 def singup_view(request):
+    print(request.POST)
     if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            print('form')
-    else:
-        form = SignupForm()
-        
-    param = {
-        "form": form,
-    }
-
-    return render(request, 'signup.html', param)
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        try:
+            user = User.objects.create_user(username, email, password)
+            return render(request, 'signup.html', {})
+        except IntegrityError:
+            return render(request, 'signup.html', {'error':'このユーザーはすでに登録されています。'})
+                
+    return render(request, 'signup.html', {})
 
 #ログイン処理
 def login_view(request):
     if request.method == 'POST':
-        # フォーム入力のユーザーID・パスワード取得
-        ID = request.POST.get('username')
-        Pass = request.POST.get('password')
-
-        # Djangoの認証機能
-        user = authenticate(username=ID, password=Pass)
-
-        # ユーザー認証
-        if user:
-            #ユーザーアクティベート判定
-            if user.is_active:
-                # ログイン
-                login(request,user)
-                # ログインページ遷移
-                return HttpResponseRedirect(reverse('App:mainpage'))
-            else:
-                # アカウント利用不可
-                return HttpResponse("アカウントが有効ではありません")
-        # ユーザー認証失敗
+        email = request.POST["email"]
+        password = request.POST["password"]
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            user_id = request.User.id
+            object = User.objects.get(id=user_id)
+            return render(request, 'list.html', {'object': object})
         else:
-            return HttpResponse("ログインIDまたはパスワードが間違っています")
-    # GET
-    else:
-        return render(request, 'login.html')
+            return render(request, 'login.html', {})
+    return render(request, 'login.html', {})
 
 #ログアウト処理
 def logout_view(request):
     logout(request)
-    return redirect('App:list')
+    return redirect('App:index')
 
-#ログインページ
-def mainpage_view(request):
+#メインページ
+def list_view(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
     if not request.user.is_authenticated:
         # ログインページ遷移
-        return HttpResponseRedirect(reverse('App:list'))
+        return HttpResponseRedirect(reverse('App:index'))
     
     context = {
         "bicycles": Bicycle.objects.all(),
@@ -80,35 +69,14 @@ def mainpage_view(request):
     for bicycle in Bicycle.objects.all():
         print(bicycle.image)
     
-    return render(request, 'mainpage.html', context)
+    return render(request, 'list.html', context)
 
 #自転車登録ページ
 def bicycle_create_view(request):
-    context = None
-    if request.method == 'POST':
-        form = BicycleForm(request.POST, request.FILES)
-        for field in form:
-            print("Field Error:", field.name,  field.errors)
-        if form.is_valid():
-            brand = form.cleaned_data['brand']
-            model = form.cleaned_data['model']
-            year = form.cleaned_data['year']
-            image = form.cleaned_data['image']
-            bicycle = Bicycle(brand=brand, model=model, year=year, image=image)
-            bicycle.save()
-            return redirect('App:mainpage')
-    else:
-        form = BicycleForm()
-        choices = Brand_Choices
-        context = {
-            'form' : form,
-            'choices' : choices
-        }
-    
-    return render(request, 'bicycle_create.html', context)
+    return render(request, 'bicycle_create.html', )
 
 #自転車詳細ページ
-def bicycle_detail_view(request):
+def bicycle_detail_view(request, pk):
 
     context = {
         'parts': Part.objects.all(),

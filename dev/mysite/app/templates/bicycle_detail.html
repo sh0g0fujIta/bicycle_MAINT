@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content_block %}
+{% block content %}
 <h1 class="h3 mb-3 fw-bolder text-center">{{ bicycle.brand }}のパーツ構成</h1>
     <a href="{% url 'App:part_create' %}" class="btn btn-outline-primary">パーツ登録</a>
     <table class="table text-center">
@@ -25,4 +25,4 @@
             {% endfor %}
         </tbody>
     </table>
-{% endblock %}
+{% endblock content %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content_block %}
+{% block content %}
 <h1 class="h3 mb-3 fw-bolder text-center">自転車を登録してください</h1>
 <div class="container-sm mt-10">
   <form class="row g-3 mg-4" action="{% url 'App:bicycle_create' %}" method="POST" enctype="multipart/form-data">
@@ -35,4 +35,4 @@
     {% csrf_token %}
   </form>
 </div>
-{% endblock %}
+{% endblock content %}
