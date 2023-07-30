@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
@@ -13,10 +13,10 @@ from django.db import IntegrityError
 def index_view(request):
     if request.user.is_authenticated:
         # ログインページ遷移
-        login(request, User)
-        user_id = request.User.id
+        user_id = request.user.id
         object = User.objects.get(id=user_id)
-        return HttpResponseRedirect(render(request, 'list.html', {'object': object}))
+        login(request, object)
+        return redirect('App:list')
 
     return render(request, 'index.html', {})
 
@@ -29,7 +29,7 @@ def singup_view(request):
         password = request.POST['password']
         try:
             user = User.objects.create_user(username, email, password)
-            return render(request, 'signup.html', {})
+            return render(request, 'index.html', {})
         except IntegrityError:
             return render(request, 'signup.html', {'error':'このユーザーはすでに登録されています。'})
                 
@@ -37,16 +37,17 @@ def singup_view(request):
 
 #ログイン処理
 def login_view(request):
+    print(request.POST)
     if request.method == 'POST':
-        email = request.POST["email"]
+        username = request.POST["username"]
         password = request.POST["password"]
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
+            print('バリデーション成功')
             login(request, user)
-            user_id = request.User.id
-            object = User.objects.get(id=user_id)
-            return render(request, 'list.html', {'object': object})
+            return HttpResponseRedirect(reverse('App:list'))
         else:
+            print('バリデーション失敗')
             return render(request, 'login.html', {})
     return render(request, 'login.html', {})
 
@@ -57,35 +58,68 @@ def logout_view(request):
 
 #メインページ
 def list_view(request):
-    user_id = request.user.id
-    user = User.objects.get(id=user_id)
     if not request.user.is_authenticated:
-        # ログインページ遷移
         return HttpResponseRedirect(reverse('App:index'))
     
     context = {
         "bicycles": Bicycle.objects.all(),
         }
-    for bicycle in Bicycle.objects.all():
-        print(bicycle.image)
-    
+    print(context)
+        
     return render(request, 'list.html', context)
 
 #自転車登録ページ
 def bicycle_create_view(request):
-    return render(request, 'bicycle_create.html', )
+    user_id = request.user.id
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        image = request.FILES.get('image')
+        brand = request.POST.get('brand')
+        model = request.POST.get('model')
+        size = request.POST.get('size')
+        year = request.POST.get('year')
+        bicycle = Bicycle(user=user, image=image, brand=brand, model=model, size=size, year=year)
+        print(image)
+        bicycle.save()
+        return redirect('App:list')
+        
+    return render(request, 'bicycle_create.html', {'choices': Brand_Choices})
 
 #自転車詳細ページ
-def bicycle_detail_view(request, pk):
+def bicycle_detail_view(request, bicycle_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('App:index'))
+
+    bicycle = get_object_or_404(Bicycle, id=bicycle_id)
+    parts = Part.objects.filter(bicycle=bicycle)
 
     context = {
-        'parts': Part.objects.all(),
-        'bicycle': Bicycle.objects.all(),
-        }
+        'bicycle': bicycle,
+        'parts': parts,
+    }
     
     return render(request, 'bicycle_detail.html', context)
 
-#パーツ登録ページ
-def part_create_view(request):
+#自転車削除ページ
+def bicycle_delete_view(request, bicycle_id):
+    bicycle = get_object_or_404(Bicycle, id=bicycle_id)
     
-    return render(request, 'part_create.html')
+    if request.method == 'POST':
+        bicycle.delete()
+        return redirect('App:list')
+    
+    return render(request, 'bicycle_delete.html', {'bicycle': bicycle})
+
+#パーツ登録ページ
+def part_create_view(request, bicycle_id):
+    if request.method == 'POST':
+        bicycle = get_object_or_404(Bicycle, id=bicycle_id)
+        partname = request.POST.get('partname')
+        brand = request.POST.get('brand')
+        type = request.POST.get('type')
+        last_inspection_date = request.POST.get('last_inspection_date')
+        parts = Part(bicycle=bicycle, partname=partname, brand=brand, type=type, last_inspection_date=last_inspection_date)
+        parts.save()
+        return redirect('App:bicycle_detail', bicycle_id=bicycle_id)
+        
+    return render(request, 'part_create.html', {})

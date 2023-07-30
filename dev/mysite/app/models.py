@@ -86,12 +86,19 @@ Brand_Choices = (
     ('WILIER', 'ウィリエール'),
     ('ZULLO', 'ズッロ'),           
 )
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
     
 class Bicycle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,)
     image = models.ImageField(upload_to='images/bycycle/', verbose_name='登録する自転車の画像')
-    brand = models.CharField('ブランド', max_length=100, choices=Brand_Choices)
-    model = models.CharField('モデル', max_length=100, null=True, blank=True)
+    brand = models.CharField('ブランド', max_length=50, choices=Brand_Choices)
+    model = models.CharField('モデル', max_length=50, null=True, blank=True)
+    size = models.CharField('サイズ', max_length=10, null=True, blank=True)
     year = models.CharField('年式', max_length=100, null=True, blank=True)
     update_at = models.DateTimeField('更新日時',null=False, blank=False, auto_now=True)
     
@@ -99,11 +106,11 @@ class Bicycle(models.Model):
         return self.brand + "_" + self.model + "_" + self.year
     
 class Part(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,)
-    name = models.CharField('パーツ名', max_length=100, null=True, blank=True)
+    bicycle = models.ForeignKey(Bicycle, on_delete=models.CASCADE,)
+    partname = models.CharField('パーツ名', max_length=100, null=True, blank=True)
     brand = models.CharField('ブランド', max_length=100, null=True, blank=True)
     type = models.CharField('タイプ', max_length=100, null=True, blank=True)
     last_inspection_date = models.DateField('点検日付（交換日）', max_length=100, null=True, blank=True)
     
     def __str__(self):
-        return self.name + "_" + self.brand
+        return self.bicycle + "_"  + self.partname + "_" + self.brand
