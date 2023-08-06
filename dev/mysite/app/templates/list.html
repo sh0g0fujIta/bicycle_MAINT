@@ -1,36 +1,46 @@
 {% extends "base.html" %}
 
+{% load custom_filters %}
+
 {% load static %}
 
+{% block customcss %}
+    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+{% endblock customcss %}
+
+
 {% block content %}
-
-  <h1 class="h1 mb-3 fw-bolder text-center">ようこそ{{ user.username }}さん</h1>
-  <div class="album py-5 bg-light">
-    <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for bicycle in bicycles %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-image img-thumbnail">
-              <img src='{{ MEDIA_URL }}/{{ bicycle.image }}' class="card-img-top" width="200px" height="200px" alt="Image">
-            </div>
-            <div class="card-body">
-              <p class="card-text">Brand : {{ bicycle.brand }}</p>
-              <p class="card-text">Model : {{ bicycle.model }}</p>
-              <p class="card-text">Size : {{ bicycle.size }}</p>
-              <small class="text-muted">更新日時 : {{ bicycle.update_at }}</small>
-              <div class="d-flex justify-content-between align-items-center mt-2">
-                <div class="d-grid gap-2 d-md-block">
-                  <a type="button" href="{% url 'App:bicycle_detail' bicycle_id=bicycle.id %}" class="btn btn-sm btn-primary">Part View</a>
-                  <a type="button" href="{% url 'App:bicycle_delete' bicycle_id=bicycle.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="card">
+    <img src="{{ MEDIA_URL }}images/image/list_image.jpg" class="card-img" alt="リスト画像">
+    <div class="card-img-overlay">
+        <div class="d-flex justify-content-center">
+            <h1 class="h1 mb-3 fw-bolder text-center text-white text-shadow-custom">ようこそ{{ user.username }}さん</h1>
         </div>
-        {% endfor %}
-      </div>
+        <div class="m-auto">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for bicycle in bicycles %}
+                <div class="col">
+                    <div class="card shadow-sm bg-light">
+                        <div class="card-image img-thumbnail">
+                            <img src='{{ MEDIA_URL }}/{{ bicycle.image }}' class="card-img-top" width="200px" height="250px" alt="Image">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Brand : {{ bicycle.brand }}</p>
+                            <p class="card-text">Model : {{ bicycle.model }}</p>
+                            <p class="card-text">Size : {{ bicycle.size }}</p>
+                            <small class="text-muted">更新日時 : {{ bicycle.update_at }}</small>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-grid gap-2 d-md-block">
+                                    <a type="button" href="{% url 'App:bicycle_detail' bicycle_id=bicycle.id %}" class="btn btn-sm btn-primary">パーツ一覧へ</a>
+                                    <a type="button" href="{% url 'App:bicycle_delete' bicycle_id=bicycle.id %}" class="btn btn-sm btn-outline-danger">削除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div> 
     </div>
-  </div>
-
+</div>
 {% endblock content %}

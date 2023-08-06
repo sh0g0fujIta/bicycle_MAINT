@@ -104,12 +104,28 @@ class Bicycle(models.Model):
     
     def __str__(self):
         return self.brand + "_" + self.model + "_" + self.year
+
+Partname_Choices = (
+        ('FLAME', 'フレーム'),
+        ('FRONTBRAKE', 'フロントブレーキ'),
+        ('REARBRAKE', 'リアブレーキ'),
+        ('CHAIN', 'チェーン'),
+        ('FRONTTIRE', 'フロントタイヤ'),
+        ('REARTIRE', 'リアタイヤ'),
+        ('STEM', 'ステム'),
+        ('SADDLE', 'サドル'),
+        ('SEATPOST', 'シートポスト'),
+        ('SEATCLAMP', 'シートクランプ'),
+        ('PEDAL', 'ペダル'),
+        ('FRONTPEDAL', 'フロントライト'),
+        ('TAILPEDAL', 'テールライト'),
+        ('BOTTLECAGE', 'ボトルケージ'),
+)
+
     
 class Part(models.Model):
     bicycle = models.ForeignKey(Bicycle, on_delete=models.CASCADE,)
-    partname = models.CharField('パーツ名', max_length=100, null=True, blank=True)
-    brand = models.CharField('ブランド', max_length=100, null=True, blank=True)
-    type = models.CharField('タイプ', max_length=100, null=True, blank=True)
+    partname = models.CharField('パーツ名', max_length=100, choices=Partname_Choices)
     last_inspection_date = models.DateField('点検日付（交換日）', max_length=100, null=True, blank=True)
     
     def __str__(self):

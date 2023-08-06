@@ -1,30 +1,47 @@
 {% extends "base.html" %}
 
+{% load custom_filters %}
+
 {% block content %}
-<div class="container">
-    <h1 class="h3 mb-3 fw-bolder text-center">{{ bicycle.model }}のパーツ構成</h1>
-    <a href="{% url 'App:part_create' bicycle_id=bicycle.id %}" class="btn btn-outline-primary">パーツ登録</a>
+<div class="card">  
+    <img src="{{ MEDIA_URL }}images/image/bicycle_detail_image.jpg" class="card-img" alt="パーツ画像">
+    <div class="card-img-overlay">
+        <div class="row justify-content-end mb-3">
+            <div class="col-8 text-center">
+                <h1 class="h3 fw-bolder">{{ bicycle.model }}のパーツ一覧</h1>
+            </div>
+            <div class="col-2 text-end">
+                <a href="{% url 'App:list' %}" class="btn btn-secondary">自転車一覧へ</a>
+            </div>
+        </div>
+        <div class="m-auto">
+            <table class="table bg-body text-center">
+                <thead class="">
+                    <tr>
+                        <th scope="col">パーツ名</th>
+                        <th scope="col">最終点検日</th>
+                        <th scope="col">#</th>
+                        <th scope="col">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for part in parts %}
+                    <tr {% if part.last_inspection_date|maintenance_warning:part.partname %} class="table-danger" {% endif %}>
+                        <div class="text-info text-shadow">
+                            <td>{{ partname_dict|get_partname:part.partname }}</td>
+                            <td>{{ part.last_inspection_date}}</td>
+                            <td><a href="#" class="btn btn-success">更新</a></td>
+                            <td><a href="{% url 'App:part_delete' part_id=part.id %}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#partDeleteModal{{ part.id }}">削除</a></td>
+                        </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-end">
+                <a href="{% url 'App:part_create' bicycle_id=bicycle.id %}" class="btn btn-primary">パーツ登録</a>
+            </div>
+        </div>
+    </div>
 </div>
-    <table class="table text-center">
-        <thead>
-          <tr>
-            <th scope="col">パーツ名</th>
-            <th scope="col">ブランド</th>
-            <th scope="col">タイプ</th>
-            <th scope="col">点検日</th>
-            <th scope="col">#</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for part in parts %}
-            <tr>
-                <td>{{ part.partname }}</td>
-                <td>{{ part.brand }}</td>
-                <td>{{ part.type }}</td>
-                <td>{{ part.last_inspection_date}}</td>
-                <td><a href="#" class="btn btn-outline-success">更新</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
 {% endblock content %}

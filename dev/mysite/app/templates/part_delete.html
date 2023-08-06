@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load custom_filters %}
+
+{% block content %}
+
+<body class="form-signin">
+    <div class="flex justify-center items-center text-center">
+        <h1 class="h3 mb-3 fw-normal">パーツの削除</h1>
+        <p>以下のパーツを削除します。よろしいですか？</p>
+        <p>{{ partname_dict|get_partname:part.partname }}</p>
+        <div class="d-grid gap-2 d-md-block">
+            <form class="form-signin" action="{% url 'App:part_delete' part_id=part.id %}" method="post">{% csrf_token %}
+                <button type="submit" class="btn btn-danger">削除</button>
+                <a href="{% url 'App:bicycle_detail' bicycle_id=part.bicycle.id %}" class="btn btn-secondary">キャンセル</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

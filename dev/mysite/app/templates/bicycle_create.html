@@ -1,41 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="h3 mb-3 fw-bolder text-center">自転車を登録してください</h1>
-<div class="container-sm mt-10">
-  <form class="row g-3 mg-4" action="{% url 'App:bicycle_create' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    <div class="flex justify-center items-center"></div>
-      <div class="col-md-6">
-          <label for="inputBrand" class="form-label">ブランド</label>
-          <select id="inputBrand" name="brand" class="form-select">
-            {% for item in choices %}
-              <option selected value="{{ item.0 }}">
-                {{ item.1 }}
-              </option>
-            {% endfor %}
-          </select>
-      </div>
-      <div class="col-md-6">
-        <label for="inputModel" class="form-label">モデル</label>
-        <input type="text" name="model" class="form-control" placeholder="PANTAREI">
-      </div>
-      <div class="col-md-6">
-        <label for="inputSize" class="form-label">サイズ</label>
-        <input type="text" name="size" class="form-control" placeholder="45">
-      </div>
-      <div class="col-md-6">
-        <label for="inputyear" class="form-label">年式</label>
-        <input type="text" name="year" class="form-control" placeholder="2008">
-      </div>
-      <div class="col-12">
-          <div class="mb-3">
-              <label for="formFile" class="form-label">自転車の写真</label>
-              <input class="form-control" type="file" name="image">
-          </div>
-      <div class="mt-4 text-center col-12">
-        <button type="submit" class="btn btn-primary">登録</button>
-      </div>
-    </div>  
-  </form>
+<div class="container mt-2">
+	<div class="row justify-content-end mb-3">
+		<div class="col-8 text-center">
+      		<h1 class="h3 mb-3 fw-bolder text-center">自転車を登録してください</h1>
+		</div>
+		<div class="col-2 text-end">
+			<a href="{% url 'App:list' %}" class="btn btn-secondary">自転車一覧へ</a>
+		</div>
+	</div>
+	<div class="container-sm mt-10">
+	<div class="flex justify-center items-center">
+		<form class="row g-3" action="{% url 'App:bicycle_create' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+			<div class="col-md-6">
+				<label for="inputBrand" class="form-label">ブランド</label>
+				<select id="inputBrand" name="brand" class="form-select">
+					{% for item in choices %}
+					<option selected value="{{ item.0 }}">
+						{{ item.1 }}
+					</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="col-md-6">
+				<label for="inputModel" class="form-label">モデル</label>
+				<input type="text" name="model" class="form-control" placeholder="PANTAREI">
+			</div>
+			<div class="col-md-6">
+				<label for="inputSize" class="form-label">サイズ</label>
+				<input type="text" name="size" class="form-control" placeholder="45">
+			</div>
+			<div class="col-md-6">
+				<label for="inputyear" class="form-label">年式</label>
+				<input type="text" name="year" class="form-control" placeholder="2008">
+			</div>
+			<div class="col-md-6">
+				<div class="mb-3">
+					<label for="formFile" class="form-label">自転車の写真</label>
+					<input class="form-control" type="file" name="image">
+				</div>
+			</div>
+			<div class="mt-4 text-center col-12">
+				<button type="submit" class="btn btn-primary">登録</button>
+			</div>
+		</form>
+	</div>  
 </div>
 {% endblock content %}

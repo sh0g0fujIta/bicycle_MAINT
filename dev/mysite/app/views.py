@@ -2,14 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
-from .models import Bicycle, Part, Brand_Choices
+from .models import Bicycle, Part, Brand_Choices, Partname_Choices
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 
 # Create your views here.
 
 
-#メインページ処理
+#メインページ
 def index_view(request):
     if request.user.is_authenticated:
         # ログインページ遷移
@@ -56,7 +56,7 @@ def logout_view(request):
     logout(request)
     return redirect('App:index')
 
-#メインページ
+#自転車一覧
 def list_view(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('App:index'))
@@ -92,10 +92,12 @@ def bicycle_detail_view(request, bicycle_id):
 
     bicycle = get_object_or_404(Bicycle, id=bicycle_id)
     parts = Part.objects.filter(bicycle=bicycle)
+    partname_dict = dict(Partname_Choices)
 
     context = {
         'bicycle': bicycle,
         'parts': parts,
+        'partname_dict': partname_dict
     }
     
     return render(request, 'bicycle_detail.html', context)
@@ -112,14 +114,31 @@ def bicycle_delete_view(request, bicycle_id):
 
 #パーツ登録ページ
 def part_create_view(request, bicycle_id):
+    context = {
+        'bicycle_id': bicycle_id,
+        'choices': Partname_Choices
+    }
     if request.method == 'POST':
         bicycle = get_object_or_404(Bicycle, id=bicycle_id)
         partname = request.POST.get('partname')
-        brand = request.POST.get('brand')
-        type = request.POST.get('type')
         last_inspection_date = request.POST.get('last_inspection_date')
-        parts = Part(bicycle=bicycle, partname=partname, brand=brand, type=type, last_inspection_date=last_inspection_date)
+        parts = Part(bicycle=bicycle, partname=partname, last_inspection_date=last_inspection_date)
         parts.save()
-        return redirect('App:bicycle_detail', bicycle_id=bicycle_id)
+        return redirect('App:bicycle_detail', bicycle_id = bicycle_id)
         
-    return render(request, 'part_create.html', {})
+    return render(request, 'part_create.html', context)
+
+#パーツ削除ページ
+def part_delete_view(request, part_id):
+    part = get_object_or_404(Part, id=part_id)
+    partname_dict = dict(Partname_Choices)
+    context = {
+        'part': part,
+        'partname_dict': partname_dict
+    }
+    
+    if request.method == 'POST':
+        part.delete()
+        return redirect('App:bicycle_detail', bicycle_id = part.bicycle.id)
+    
+    return render(request, 'part_delete.html', context)
