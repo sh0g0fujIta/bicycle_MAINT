@@ -2,13 +2,19 @@
 
 {% load custom_filters %}
 
+{% load static %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock customcss %}
+
 {% block content %}
 <div class="card">  
     <img src="{{ MEDIA_URL }}images/image/bicycle_detail_image.jpg" class="card-img" alt="パーツ画像">
     <div class="card-img-overlay">
         <div class="row justify-content-end mb-3">
             <div class="col-8 text-center">
-                <h1 class="h3 fw-bolder">{{ bicycle.model }}のパーツ一覧</h1>
+                <h1 class="h3 fw-bolder text-dark text-shadow-custom">{{ bicycle.model }}のパーツ一覧</h1>
             </div>
             <div class="col-2 text-end">
                 <a href="{% url 'App:list' %}" class="btn btn-secondary">自転車一覧へ</a>
