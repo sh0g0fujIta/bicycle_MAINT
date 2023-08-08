@@ -8,23 +8,19 @@
             <div class="modal-body">
 				<form class="row g-3" action="{% url 'App:part_create' bicycle.id %}" method="POST">
 					{% csrf_token %}
-					<div class="container-sm mt-10">
-						<div class="flex justify-center items-center">
-							<div class="col-md-6">
-								<label for="inputPart" class="form-label">パーツ名</label>
-							  	<select id="inputPart" name="partname" class="form-select">
-								{% for partname in partname_choices %}
-									<option selected value="{{ partname.1 }}">
-									  {{ partname.1 }}
-									</option>
-								{% endfor %}
-								</select>
-							</div>
-						  	<div class="col-md-6">
-								<label for="inputType" class="form-label">点検日付</label>
-							  	<input name="last_inspection_date" type="date" class="form-control" id="inputAddress" placeholder="">
-						  	</div>
-						</div>
+					<div class="col-12">
+						<label for="inputPart" class="form-label">パーツ名</label>
+						<select id="inputPart" name="partname" class="form-select">
+						{% for partname in partname_choices %}
+							<option selected value="{{ partname.1 }}">
+								{{ partname.1 }}
+							</option>
+						{% endfor %}
+						</select>
+					</div>
+					<div class="mb-3">
+						<label for="inputType" class="form-label">点検日付</label>
+						<input name="last_inspection_date" type="date" class="form-control" id="inputAddress" placeholder="">
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary">登録</button>
