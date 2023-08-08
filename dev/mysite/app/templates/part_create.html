@@ -1,37 +1,37 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="container mt-2">
-	<div class="row justify-content-end mb-3">
-		<div class="col-8 text-center">
-			<h1 class="h3 fw-bolder">パーツを登録してください</h1>
-		</div>
-		<div class="col-2 text-end">
-			<a href="{% url 'App:bicycle_detail' bicycle_id=bicycle_id %}" class="btn btn-secondary"> パーツ一覧へ</a>
-		</div>
-	</div>
-	<div class="container-sm mt-10">
-		  <div class="flex justify-center items-center">
-			<form class="row g-3" action="{% url 'App:part_create' bicycle_id %}" method="POST">{% csrf_token %}
-				<div class="col-md-6">
-					<label for="inputPart" class="form-label">パーツ名</label>
-					<select id="inputPart" name="partname" class="form-select">
-						{% for partname in choices %}
-						  <option selected value="{{ partname.0 }}">
-							{{ partname.1 }}
-						  </option>
-						{% endfor %}
-					  </select>
-				</div>
-				<div class="col-md-6">
-					<label for="inputType" class="form-label">点検日付</label>
-					<input name="last_inspection_date" type="date" class="form-control" id="inputAddress" placeholder="">
-				</div>
-				<div class="mt-4 text-center col-12">
-					<button type="submit" class="btn btn-primary">登録</button>
-				</div>  
-			</form>
-		  </div>
-	</div>
+<div class="modal fade" id="partCreateModal{{ bicycle.id }}" tabindex="-1" aria-labelledby="partCreateModalLabel{{ parts.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">パーツの登録</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+				<form class="row g-3" action="{% url 'App:part_create' bicycle.id %}" method="POST">
+					{% csrf_token %}
+					<div class="container-sm mt-10">
+						<div class="flex justify-center items-center">
+							<div class="col-md-6">
+								<label for="inputPart" class="form-label">パーツ名</label>
+							  	<select id="inputPart" name="partname" class="form-select">
+								{% for partname in partname_choices %}
+									<option selected value="{{ partname.1 }}">
+									  {{ partname.1 }}
+									</option>
+								{% endfor %}
+								</select>
+							</div>
+						  	<div class="col-md-6">
+								<label for="inputType" class="form-label">点検日付</label>
+							  	<input name="last_inspection_date" type="date" class="form-control" id="inputAddress" placeholder="">
+						  	</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">登録</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+					</div>
+				</form>
+			</div>
+        </div>
+    </div>
 </div>
-{% endblock content %}

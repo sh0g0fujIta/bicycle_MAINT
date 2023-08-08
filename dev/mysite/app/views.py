@@ -93,11 +93,13 @@ def bicycle_detail_view(request, bicycle_id):
     bicycle = get_object_or_404(Bicycle, id=bicycle_id)
     parts = Part.objects.filter(bicycle=bicycle)
     partname_dict = dict(Partname_Choices)
+    partname_choices = Partname_Choices
 
     context = {
         'bicycle': bicycle,
         'parts': parts,
-        'partname_dict': partname_dict
+        'partname_dict': partname_dict,
+        'partname_choices': partname_choices,
     }
     
     return render(request, 'bicycle_detail.html', context)

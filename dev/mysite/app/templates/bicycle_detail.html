@@ -31,17 +31,25 @@
                             <td>{{ partname_dict|get_partname:part.partname }}</td>
                             <td>{{ part.last_inspection_date}}</td>
                             <td><a href="#" class="btn btn-success">更新</a></td>
-                            <td><a href="{% url 'App:part_delete' part_id=part.id %}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#partDeleteModal{{ part.id }}">削除</a></td>
+                            <td><a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#partDeleteModal{{ part.id }}">削除</a></td>
+                            {% include 'part_delete.html' %}
                         </div>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div class="text-end">
-                <a href="{% url 'App:part_create' bicycle_id=bicycle.id %}" class="btn btn-primary">パーツ登録</a>
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#partCreateModal{{ bicycle.id }}">パーツ登録</a>
+                {% with partname=Partname_Choices %}
+                    {% include 'part_create.html' %}
+                {% endwith %}
             </div>
         </div>
     </div>
 </div>
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>   
+{% endblock script %}
 
 {% endblock content %}
