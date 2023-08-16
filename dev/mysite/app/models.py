@@ -119,7 +119,6 @@ Partname_Choices = (
         ('PEDAL', 'ペダル'),
         ('FRONTLIGHT', 'フロントライト'),
         ('TAILLIGHT', 'テールライト'),
-        ('BOTTLECAGE', 'ボトルケージ'),
 )
 
     

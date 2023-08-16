@@ -24,21 +24,19 @@ def maintenance_warning(last_inspection_date, part_name):
     elif part_name == 'REARTIRE':
         maintenance_period = timedelta(weeks=1)  # リアタイヤのメンテナンスサイクルは1週間
     elif part_name == 'STEM':
-        maintenance_period = timedelta(weeks=1)  # ステムのメンテナンスサイクルは1週間
+        maintenance_period = relativedelta(years=1)  # ステムのメンテナンスサイクルは1年間
     elif part_name == 'SADDLE':
-        maintenance_period = timedelta(weeks=1)  # サドルのメンテナンスサイクルは1週間
+        maintenance_period = relativedelta(years=5)  # サドルのメンテナンスサイクルは5年間
     elif part_name == 'SEATPOST':
-        maintenance_period = timedelta(weeks=1)  # シートポストのメンテナンスサイクルは1週間
+        maintenance_period = relativedelta(years=1)  # シートポストのメンテナンスサイクルは1年間
     elif part_name == 'SEATCLAMP':
         maintenance_period = timedelta(weeks=1)  # シートクランプのメンテナンスサイクルは1週間
     elif part_name == 'PEDAL':
-        maintenance_period = timedelta(weeks=1)  # ペダルのメンテナンスサイクルは1週間
+        maintenance_period = relativedelta(months=3)  # ペダルのメンテナンスサイクルは3か月
     elif part_name == 'FLONTLIGHT':
-        maintenance_period = timedelta(weeks=1)  # フロントライトのメンテナンスサイクルは1週間
+        maintenance_period = relativedelta(months=1)  # フロントライトのメンテナンスサイクルは1か月
     elif part_name == 'TAILLIGHT':
-        maintenance_period = timedelta(weeks=1)  # テールライトのメンテナンスサイクルは1週間
-    elif part_name == 'BOTTLECAGE':
-        maintenance_period = timedelta(weeks=1)  # ボトルケージのメンテナンスサイクルは1週間
+        maintenance_period = relativedelta(months=1)  # テールライトのメンテナンスサイクルは1か月
     else:
         maintenance_period = None
 
