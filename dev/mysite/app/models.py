@@ -95,7 +95,7 @@ class UserProfile(models.Model):
     
 class Bicycle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,)
-    image = models.ImageField(upload_to='images/bycycle/', verbose_name='登録する自転車の画像')
+    image = models.ImageField(upload_to='images/bicycle/', verbose_name='登録する自転車の画像')
     brand = models.CharField('ブランド', max_length=50, choices=Brand_Choices)
     model = models.CharField('モデル', max_length=50, null=True, blank=True)
     size = models.CharField('サイズ', max_length=10, null=True, blank=True)
