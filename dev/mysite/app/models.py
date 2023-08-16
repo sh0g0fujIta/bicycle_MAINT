@@ -117,8 +117,8 @@ Partname_Choices = (
         ('SEATPOST', 'シートポスト'),
         ('SEATCLAMP', 'シートクランプ'),
         ('PEDAL', 'ペダル'),
-        ('FRONTPEDAL', 'フロントライト'),
-        ('TAILPEDAL', 'テールライト'),
+        ('FRONTLIGHT', 'フロントライト'),
+        ('TAILLIGHT', 'テールライト'),
         ('BOTTLECAGE', 'ボトルケージ'),
 )
 
