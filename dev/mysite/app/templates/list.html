@@ -11,7 +11,7 @@
 
 {% block content %}
 <div class="card">
-    <img src="{{ MEDIA_URL }}images/image/list_image.jpg" class="card-img" alt="リスト画像">
+    <img src="{{ MEDIA_URL }}images/image/list_image.jpg" class="card-img img-fluid" alt="リスト画像">
     <div class="card-img-overlay">
         <div class="d-flex justify-content-center">
             <h1 class="h1 mb-3 fw-bolder text-center text-white text-shadow-custom">ようこそ{{ user.username }}さん</h1>
@@ -22,7 +22,7 @@
                 <div class="col">
                     <div class="card shadow-sm bg-light">
                         <div class="card-image img-thumbnail">
-                            <img src='{{ MEDIA_URL }}/{{ bicycle.image }}' class="card-img-top" width="200px" height="250px" alt="Image">
+                            <img src='{{ MEDIA_URL }}/{{ bicycle.image }}' class="card-img-top" alt="Image">
                         </div>
                         <div class="card-body">
                             <p class="card-text">Brand : {{ bicycle.brand }}</p>
