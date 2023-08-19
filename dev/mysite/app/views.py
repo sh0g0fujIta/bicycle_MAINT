@@ -22,7 +22,6 @@ def index_view(request):
 
 #新規登録処理
 def singup_view(request):
-    print(request.POST)
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -37,7 +36,6 @@ def singup_view(request):
 
 #ログイン処理
 def login_view(request):
-    print(request.POST)
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
@@ -64,7 +62,6 @@ def list_view(request):
     context = {
         "bicycles": Bicycle.objects.all(),
         }
-    print(context)
         
     return render(request, 'list.html', context)
 
