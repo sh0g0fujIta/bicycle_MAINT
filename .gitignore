@@ -3,7 +3,7 @@ dev/mysite/myvenv
 # PowerPoint
 docs\自転車メンテナンス.pptx.lnk
 
-media/images/bicycle/
+dev\mysite\media\images\bicycle
 
 *.log
 *.pyc
