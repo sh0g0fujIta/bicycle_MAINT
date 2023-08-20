@@ -1,8 +1,6 @@
 # 仮想環境
 /bicycle_env
 
-/docs
-
 # 登録画像
 /media/images/bicycle/*
 
